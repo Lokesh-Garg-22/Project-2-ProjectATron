@@ -1,0 +1,21 @@
+import { cn } from "@/lib/utils";
+import { ReactNode } from "react";
+
+export default function MainContainer({
+  children,
+  className,
+}: {
+  children?: ReactNode;
+  className?: string | object;
+}) {
+  return (
+    <div
+      className={cn(
+        "mt-2 mx-auto h-fit max-w-6xl grow flex flex-wrap justify-center gap-2",
+        className
+      )}
+    >
+      {children}
+    </div>
+  );
+}

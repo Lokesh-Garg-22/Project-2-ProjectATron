@@ -19,7 +19,7 @@ export default function ProjectsCard() {
           </Link>
         </CardTitle>
       </CardHeader>
-      <CardContent className="w-72 flex flex-col">
+      <CardContent className="w-80 flex flex-col">
         {projects.map((ele, id) => (
           <Link
             key={id}

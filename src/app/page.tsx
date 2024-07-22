@@ -1,3 +1,4 @@
+import { WebTitle } from "@/components/global/navBar/navBar";
 import { Button } from "@/components/ui/button";
 import { TypographyH1, TypographyH2 } from "@/components/ui/Typography";
 import Link from "next/link";
@@ -9,7 +10,9 @@ export default function Page() {
         <TypographyH2>
           Welcome to your own personlised Project Manager
         </TypographyH2>
-        <TypographyH1>ProjectATron</TypographyH1>
+        <TypographyH1>
+          <WebTitle />
+        </TypographyH1>
         <div className="flex justify-center items-center p-10">
           <Button asChild>
             <Link href="app">Get Started</Link>

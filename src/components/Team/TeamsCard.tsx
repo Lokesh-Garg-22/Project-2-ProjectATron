@@ -19,7 +19,7 @@ export default function TeamsCard() {
           </Link>
         </CardTitle>
       </CardHeader>
-      <CardContent className="w-72 flex flex-col">
+      <CardContent className="w-80 flex flex-col">
         {teams.map((ele, id) => (
           <Link
             key={id}

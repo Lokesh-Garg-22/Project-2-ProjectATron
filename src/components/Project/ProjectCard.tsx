@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { Card, CardContent } from "../ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Project } from "./interface";
-import { TypographyH2 } from "../ui/Typography";
+import { TypographyH2, TypographyMuted, TypographyP } from "../ui/Typography";
 
-export default function PinnedProjectCard({ project }: { project: Project }) {
+export default function ProjectCard({ project }: { project: Project }) {
   return (
     <Card className="my-auto">
       <CardContent className="w-80 pt-6 flex flex-col">
@@ -12,11 +12,15 @@ export default function PinnedProjectCard({ project }: { project: Project }) {
         </Link>
         <div className="py-1 flex gap-1">
           {project.tags.map((ele, id) => (
-            <p key={id} className="px-2 rounded-lg border hover:bg-slate-50/5">
+            <p
+              key={id}
+              className="px-2 rounded-lg border hover:bg-slate-50/5 shadow shadow-accent-foreground"
+            >
               ele
             </p>
           ))}
         </div>
+        <TypographyP>Discription</TypographyP>
         {project?.url && (
           <a href={project.url} target="_blank" className="hover:underline">
             Vist Project
