@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { ComponentType, ReactNode } from "react";
+import { ReactNode } from "react";
 
 export default function ListRenderer<P>({
   ItemComponent,
@@ -11,7 +11,7 @@ export default function ListRenderer<P>({
   className?: string | object;
 }) {
   return (
-    <div className={cn("flex flex-wrap gap-2", className)}>
+    <div className={cn("flex flex-wrap justify-around gap-2", className)}>
       {list.map(ItemComponent)}
     </div>
   );

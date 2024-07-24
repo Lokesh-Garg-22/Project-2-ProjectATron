@@ -6,7 +6,7 @@ import TeamsCard from "@/components/Team/TeamsCard";
 
 export default function Dashboard() {
   return (
-    <MainContainer className="flex-col flex-nowrap">
+    <MainContainer>
       <div className="flex flex-wrap justify-center gap-2">
         <PersonalProfileCard />
         <PersonalProfileCard />

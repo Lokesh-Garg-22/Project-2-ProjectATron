@@ -1,9 +1,13 @@
 import Link from "next/link";
 import { Card, CardContent } from "../ui/card";
-import { Project } from "./interface";
+import { ProjectInterface } from "./interface";
 import { TypographyH2 } from "../ui/Typography";
 
-export default function PinnedProjectCard({ project }: { project: Project }) {
+export default function PinnedProjectCard({
+  project,
+}: {
+  project: ProjectInterface;
+}) {
   return (
     <Card className="my-auto">
       <CardContent className="w-80 pt-6 flex flex-col">

@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
-import { Project } from "./interface";
+import { ProjectInterface } from "./interface";
 
 export default function ProjectsCard() {
-  const projects: Array<Project> = [
+  const projects: Array<ProjectInterface> = [
     { name: "Project 1", id: "982hbkma" },
     { name: "Project 1", id: "982hbkma" },
     { name: "Project 1", id: "982hbkma" },

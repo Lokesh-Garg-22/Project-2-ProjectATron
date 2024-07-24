@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
-import { Team } from "./interface";
+import { TeamInterface } from "./interface";
 
 export default function TeamsCard() {
-  const teams: Array<Team> = [
+  const teams: Array<TeamInterface> = [
     { name: "Team 1", id: "982hbkma" },
     { name: "Team 1", id: "982hbkma" },
     { name: "Team 1", id: "982hbkma" },

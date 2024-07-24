@@ -11,7 +11,7 @@ export default function MainContainer({
   return (
     <div
       className={cn(
-        "mt-2 mx-auto h-fit max-w-6xl grow flex flex-wrap justify-center gap-2",
+        "mt-2 mx-auto px-1 h-fit max-w-6xl grow flex flex-col gap-2",
         className
       )}
     >

@@ -1,11 +1,11 @@
 import MainContainer from "@/components/global/MainContainer";
 import ListRenderer from "@/components/ListRenderer/ListRenderer";
-import { Project } from "@/components/Project/interface";
+import { ProjectInterface } from "@/components/Project/interface";
 import ProjectCard from "@/components/Project/ProjectCard";
 import SearchBar from "@/components/search/SearchBar";
 
 export default function Projects() {
-  const projects: Array<Project> = [
+  const projects: Array<ProjectInterface> = [
     { name: "Project 1", id: "awd234", tags: ["1"] },
     { name: "Project 2", id: "a46tdi", tags: ["2"] },
     { name: "Project 3", id: "aw456d", tags: ["3"] },
@@ -14,7 +14,7 @@ export default function Projects() {
   ];
 
   return (
-    <MainContainer>
+    <MainContainer className="items-center">
       <SearchBar />
       <ListRenderer
         list={projects}

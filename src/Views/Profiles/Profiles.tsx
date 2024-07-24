@@ -14,7 +14,7 @@ export default function Profiles() {
   ];
 
   return (
-    <MainContainer>
+    <MainContainer className="items-center">
       <SearchBar />
       <ListRenderer
         list={profiles}
