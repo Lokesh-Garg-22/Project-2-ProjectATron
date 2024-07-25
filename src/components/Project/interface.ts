@@ -4,5 +4,6 @@ export interface ProjectInterface {
   tags: Array<string | null>;
   hostID: string;
   host?: { name: string; id: string };
+  team?: { name: string; id: string };
   url?: string;
 }

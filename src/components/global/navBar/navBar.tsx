@@ -9,9 +9,11 @@ import {
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TypographyH1 } from "@/components/ui/Typography";
-import Login from "./login";
-import SignUp from "./signUp";
+import Login from "../user/login";
+import SignUp from "../user/signUp";
 import Link from "next/link";
+import LoginDialog from "../user/loginDialog";
+import { ReactNode } from "react";
 
 export default function NavBar() {
   return (
@@ -25,31 +27,17 @@ export default function NavBar() {
               </TypographyH1>
             </Link>
             <div className="p-1">
-              <Dialog>
-                <Button asChild className="text-sm font-semibold">
-                  <DialogTrigger>Login</DialogTrigger>
-                </Button>
-                <DialogContent>
-                  <DialogDescription>
-                    <Tabs defaultValue="login" className="">
-                      <TabsList className="w-full">
-                        <TabsTrigger value="login" className="grow">
-                          Login
-                        </TabsTrigger>
-                        <TabsTrigger value="signUp" className="grow">
-                          Sign Up
-                        </TabsTrigger>
-                      </TabsList>
-                      <TabsContent value="login">
-                        <Login />
-                      </TabsContent>
-                      <TabsContent value="signUp">
-                        <SignUp />
-                      </TabsContent>
-                    </Tabs>
-                  </DialogDescription>
-                </DialogContent>
-              </Dialog>
+              <LoginDialog
+                DialogTriggerButton={({
+                  children,
+                }: {
+                  children: ReactNode;
+                }) => (
+                  <Button asChild className="text-sm font-semibold">
+                    {children}
+                  </Button>
+                )}
+              />
             </div>
           </div>
         </div>

@@ -8,6 +8,7 @@ import {
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import NavBar from "@/components/global/navBar/navBar";
+import BgAnimation from "@/components/global/bgAnimation/BgAnimation";
 
 const space_grotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -55,6 +56,7 @@ export default function RootLayout({
       >
         <NavBar />
         {children}
+        <BgAnimation />
       </body>
     </html>
   );

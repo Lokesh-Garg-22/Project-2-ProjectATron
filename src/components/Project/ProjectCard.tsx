@@ -9,7 +9,7 @@ export default function ProjectCard({
   project: ProjectInterface;
 }) {
   return (
-    <Card className="my-auto max-w-[24rem] grow">
+    <Card className="max-w-[24rem] grow">
       <CardContent className="w-80 pt-6 flex flex-col">
         <Link href={"/app/project/" + project.id} className="hover:underline">
           <TypographyH2>{project.name}</TypographyH2>

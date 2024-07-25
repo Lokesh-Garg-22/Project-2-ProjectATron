@@ -12,26 +12,26 @@ import {
 } from "@/components/ui/Typography";
 import Link from "next/link";
 
-export default function Team({ team }: { team: TeamInterface }) {
-  const projects: Array<ProjectInterface> = [
-    { name: "Project 1", id: "awd234", tags: ["1"] },
-    { name: "Project 2", id: "a46tdi", tags: ["2"] },
-    { name: "Project 3", id: "aw456d", tags: ["3"] },
-    { name: "Project 4", id: "awd5yh", tags: ["4"] },
-    { name: "Project 5", id: "awd223", tags: ["5"] },
-  ];
-
+export default function Team({
+  team,
+  projects = [],
+}: {
+  team: TeamInterface;
+  projects?: Array<ProjectInterface>;
+}) {
   return (
-    <MainContainer className="items-center">
-      <div className="w-full mb-2 max-w-2xl flex">
-        <div className="grow">
+    <MainContainer className="items-center my-4">
+      <div className="w-full my-2 max-w-2xl flex">
+        <div className="grow space-y-4">
           <TypographyH1>{team.name}</TypographyH1>
-          <TypographyH3>
-            Created By:{" "}
+          <div className="flex">
+            <TypographyH3>Created By:</TypographyH3>
             <Link href={"/app/profile/" + team.hostID}>
-              {team?.host?.name || "Creater"}
+              <TypographyH3 className="ml-2 hover:scale-105">
+                {team?.host?.name || "Creater"}
+              </TypographyH3>
             </Link>
-          </TypographyH3>
+          </div>
         </div>
         <Card>
           <CardHeader className="p-2">

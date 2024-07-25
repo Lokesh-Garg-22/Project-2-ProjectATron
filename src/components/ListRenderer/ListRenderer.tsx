@@ -11,7 +11,7 @@ export default function ListRenderer<P>({
   className?: string | object;
 }) {
   return (
-    <div className={cn("flex flex-wrap justify-around gap-2", className)}>
+    <div className={cn("flex flex-wrap justify-center gap-4", className)}>
       {list.map(ItemComponent)}
     </div>
   );

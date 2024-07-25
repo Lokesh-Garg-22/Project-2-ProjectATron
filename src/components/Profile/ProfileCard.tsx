@@ -1,10 +1,14 @@
 import { User2Icon } from "lucide-react";
 import { TypographyH3, TypographyH4, TypographyP } from "../ui/Typography";
 import { Card, CardContent } from "@/components/ui/card";
-import { Profile } from "./interface";
+import { ProfileInterface } from "./interface";
 import Link from "next/link";
 
-export default function ProfileCard({ profile }: { profile: Profile }) {
+export default function ProfileCard({
+  profile,
+}: {
+  profile: ProfileInterface;
+}) {
   return (
     <Card className="my-auto">
       <CardContent className="w-80 h-44 pt-6 flex gap-x-2">
