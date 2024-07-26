@@ -7,7 +7,7 @@ import { ReactNode } from "react";
 
 export default function Page() {
   return (
-    <main className="min-h-[90vh] xl:m-24 m-0 xl:p-0 p-24 max-w-7xl">
+    <main className="min-h-[89vh] xl:mx-auto mx-0 xl:px-0 p-24 max-w-7xl">
       <div className="flex flex-col text-center">
         <TypographyH2>
           Welcome to your own personlised Project Manager
