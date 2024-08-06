@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Card, CardContent } from "../ui/card";
-import { ProjectInterface } from "./interface";
+import { ProjectInterface } from "../../lib/interface/project/interface";
 import { TypographyH2, TypographyP } from "../ui/Typography";
 
 export default function ProjectCard({

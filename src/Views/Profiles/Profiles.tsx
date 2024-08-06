@@ -1,5 +1,5 @@
 import MainContainer from "@/components/global/MainContainer";
-import ListRenderer from "@/components/ListRenderer/ListRenderer";
+import ListRenderer from "@/components/Wrapper/ListRenderer";
 import { ProfileInterface } from "@/components/Profile/interface";
 import ProfileCard from "@/components/Profile/ProfileCard";
 import SearchBar from "@/components/search/SearchBar";

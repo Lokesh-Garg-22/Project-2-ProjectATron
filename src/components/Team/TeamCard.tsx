@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Card, CardContent } from "../ui/card";
-import { TeamInterface } from "./interface";
+import { TeamInterface } from "../../lib/interface/team/interface";
 import { TypographyH2, TypographyP } from "../ui/Typography";
 
 export default function TeamCard({ team }: { team: TeamInterface }) {

@@ -1,5 +1,5 @@
 import MainContainer from "@/components/global/MainContainer";
-import ListRenderer from "@/components/ListRenderer/ListRenderer";
+import ListRenderer from "@/components/Wrapper/ListRenderer";
 import { ProfileInterface } from "@/components/Profile/interface";
 import { type ProjectInterface } from "@/components/Project/interface";
 import ProjectCard from "@/components/Project/ProjectCard";

@@ -1,7 +1,7 @@
 import { User2Icon } from "lucide-react";
 import { TypographyH3, TypographyH4, TypographyP } from "../ui/Typography";
 import { Card, CardContent } from "@/components/ui/card";
-import { ProfileInterface } from "./interface";
+import { ProfileInterface } from "../../lib/interface/profile/interface";
 
 export default function PersonalProfileCard() {
   const profile: ProfileInterface = {

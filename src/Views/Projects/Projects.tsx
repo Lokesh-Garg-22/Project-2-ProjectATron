@@ -1,5 +1,5 @@
 import MainContainer from "@/components/global/MainContainer";
-import ListRenderer from "@/components/ListRenderer/ListRenderer";
+import ListRenderer from "@/components/Wrapper/ListRenderer";
 import { ProjectInterface } from "@/components/Project/interface";
 import ProjectCard from "@/components/Project/ProjectCard";
 import SearchBar from "@/components/search/SearchBar";
@@ -14,7 +14,7 @@ export default function Projects() {
   ];
 
   return (
-    <MainContainer className="items-center">
+    <MainContainer className="my-4 items-center space-y-4">
       <SearchBar />
       <ListRenderer
         list={projects}
