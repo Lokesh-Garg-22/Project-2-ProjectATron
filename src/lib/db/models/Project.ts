@@ -1,6 +1,15 @@
 import mongoose from "mongoose";
 
-const projectSchema = new mongoose.Schema({
+export interface projectSchema {
+  name: String;
+  tags: String[];
+  discription?: String;
+  url?: String;
+  teamID?: String;
+  userID: String;
+}
+
+const projectSchema = new mongoose.Schema<projectSchema>({
   name: String,
   tags: [String],
   discription: String,
@@ -10,6 +19,7 @@ const projectSchema = new mongoose.Schema({
 });
 
 const Project =
-  mongoose.models.Project || mongoose.model("Project", projectSchema);
+  mongoose.models.Project<projectSchema> ||
+  mongoose.model<projectSchema>("Project", projectSchema);
 
 export default Project;

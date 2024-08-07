@@ -28,6 +28,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { TypographyH1 } from "@/components/ui/Typography";
+import { useToast } from "@/components/ui/use-toast";
 import SelectSearchCommandRender from "@/components/Wrapper/SelectSearchInputRender";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -52,6 +53,7 @@ export default function CreateProject() {
       tags: [],
     },
   });
+  const { toast } = useToast();
 
   const teamsList = [
     { label: "1", value: "1" },
@@ -64,8 +66,25 @@ export default function CreateProject() {
     { label: "8", value: "8" },
   ];
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    const res = await fetch(
+      `/api/create/project?name=${values.name}&password=${values.tags}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username: "example" }),
+      }
+    ).then((res) => res.json());
+    if (!!res?.error) {
+      toast({ title: res.error });
+    } else {
+      //TODO: SignUp
+      console.log(res);
+      toast({ title: "Account Created Successfully" });
+    }
   }
 
   return (

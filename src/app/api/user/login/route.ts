@@ -1,17 +1,20 @@
 import dbConnect from "@/lib/db/dbConnect";
-import User from "@/lib/db/models/User";
+import User, { userSchema } from "@/lib/db/models/User";
+import { HydratedDocument } from "mongoose";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request) {
+export async function GET(req: Request) {
   await dbConnect();
-  const data = new URL(request.url).searchParams;
+  const data = new URL(req.url).searchParams;
   try {
-    const users = await User.find({
+    const users: HydratedDocument<userSchema>[] = await User.find({
       username: data.get("username"),
-      password: data.get("password"),
     });
-    if (users.length > 0) return NextResponse.json({ msg: "Success" });
-    return NextResponse.json({ error: "User Not Found!" });
+    if (users.length == 0)
+      return NextResponse.json({ error: "User Not Found" });
+    if (users[0].password != data.get("password"))
+      return NextResponse.json({ error: "Wrong Password!!" });
+    return NextResponse.json({ user: users[0] });
   } catch (err: any) {
     return NextResponse.json({ error: err.message });
   }

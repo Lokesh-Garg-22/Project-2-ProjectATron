@@ -10,6 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -28,9 +29,26 @@ export default function SignUp() {
       password: "",
     },
   });
+  const { toast } = useToast();
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (values.password != values.cpassword) {
+      toast({ title: "Please type the same Password", variant: "destructive" });
+      return;
+    }
+    const res = await fetch(
+      `/api/user/signup?username=${values.username}&password=${values.password}`,
+      {
+        method: "GET",
+      }
+    ).then((res) => res.json());
+    if (!!res?.error) {
+      toast({ title: res.error });
+    } else {
+      //TODO: SignUp
+      console.log(res);
+      toast({ title: "Account Created Successfully" });
+    }
   }
 
   return (

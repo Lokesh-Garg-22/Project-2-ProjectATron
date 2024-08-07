@@ -1,12 +1,17 @@
 import mongoose from "mongoose";
 
-const followedUserSchema = new mongoose.Schema({
+export interface followedUserSchema {
+  userID: String;
+  followedIDs: String[];
+}
+
+const followedUserSchema = new mongoose.Schema<followedUserSchema>({
   userID: String,
   followedIDs: [String],
 });
 
 const FollowedUser =
-  mongoose.models.FollowedUser ||
-  mongoose.model("FollowedUser", followedUserSchema);
+  mongoose.models.FollowedUser<followedUserSchema> ||
+  mongoose.model<followedUserSchema>("FollowedUser", followedUserSchema);
 
 export default FollowedUser;
