@@ -11,7 +11,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
+import { userSchema } from "@/lib/db/models/User";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -30,24 +32,32 @@ export default function SignUp() {
     },
   });
   const { toast } = useToast();
+  const [active, setActive] = useState(true);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!active) return;
     if (values.password != values.cpassword) {
       toast({ title: "Please type the same Password", variant: "destructive" });
       return;
     }
-    const res = await fetch(
-      `/api/user/signup?username=${values.username}&password=${values.password}`,
-      {
-        method: "GET",
-      }
-    ).then((res) => res.json());
+    setActive(false);
+    const res: { msg: string; user: userSchema } & { error: string } =
+      await fetch(
+        `/api/user/signup?username=${values.username}&password=${values.password}`,
+        {
+          method: "GET",
+        }
+      ).then((res) => res.json());
     if (!!res?.error) {
       toast({ title: res.error });
+      setActive(true);
     } else {
       //TODO: SignUp
       console.log(res);
+      window.localStorage.setItem("username", res.user.username);
+      window.localStorage.setItem("password", res.user.password);
       toast({ title: "Account Created Successfully" });
+      setActive(true);
     }
   }
 
@@ -98,7 +108,9 @@ export default function SignUp() {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button disabled={!active} type="submit">
+            Submit
+          </Button>
         </form>
       </Form>
     </>

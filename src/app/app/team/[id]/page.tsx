@@ -1,9 +1,40 @@
-import { ProjectInterface } from "@/components/Project/interface";
-import { type TeamInterface } from "@/components/Team/interface";
+import { hostURL } from "@/lib/data";
+import { ProjectInterface } from "@/lib/interface/project/interface";
+import { TeamInterface } from "@/lib/interface/team/interface";
 import Team from "@/Views/Teams/Team";
+import { notFound } from "next/navigation";
 
-export default function Page({ params }: { params: { id: string } }) {
-  const team: TeamInterface = {
+async function getTeam(id: string) {
+  const data: {
+    team?: TeamInterface;
+    error?: string;
+  } = await fetch(`${hostURL}/api/team?id=${id}`, {
+    method: "GET",
+  }).then((res) => res.json());
+  if (data?.error) notFound();
+  return data.team;
+}
+async function getProjects(id: string) {
+  const data: {
+    projects?: ProjectInterface[];
+    error?: string;
+  } = await fetch(`${hostURL}/api/team?id=${id}`, {
+    method: "GET",
+  }).then((res) => res.json());
+  if (data?.error) notFound();
+  return data.projects;
+}
+
+export default async function Page({ params }: { params: { id: string } }) {
+  // TODO to check
+  const data: {
+    team?: TeamInterface;
+    projects?: ProjectInterface[];
+  } = {
+    team: await getTeam(params.id),
+    projects: await getProjects(params.id),
+  };
+  const defaultTeam: TeamInterface = {
     name: "Team 1",
     id: params.id,
     hostID: "asdk290",
@@ -17,7 +48,7 @@ export default function Page({ params }: { params: { id: string } }) {
       { name: "User 5", id: "aw89" },
     ],
   };
-  const projects: Array<ProjectInterface> = [
+  const defaultProjects: Array<ProjectInterface> = [
     { name: "Project 1", id: "awd234", hostID: "awd892", tags: ["1"] },
     { name: "Project 2", id: "a46tdi", hostID: "awd892", tags: ["2"] },
     { name: "Project 3", id: "aw456d", hostID: "awd892", tags: ["3"] },
@@ -25,5 +56,10 @@ export default function Page({ params }: { params: { id: string } }) {
     { name: "Project 5", id: "awd223", hostID: "awd892", tags: ["5"] },
   ];
 
-  return <Team team={team} projects={projects} />;
+  return (
+    <Team
+      team={data.team || defaultTeam}
+      projects={data.projects || defaultProjects}
+    />
+  );
 }

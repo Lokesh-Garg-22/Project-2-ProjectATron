@@ -1,23 +1,34 @@
-import { ProjectInterface } from "@/components/Project/interface";
+import { hostURL } from "@/lib/data";
+import { ProjectInterface } from "@/lib/interface/project/interface";
 import Project from "@/Views/Projects/Project";
+import { notFound } from "next/navigation";
 
-export default function Page({ params }: { params: { id: string } }) {
-  const project: ProjectInterface = {
+export default async function Page({ params }: { params: { id: string } }) {
+  // TODO
+  const defaultProject: ProjectInterface = {
     name: "Project",
     id: params.id,
-    url: "www.google.co.in",
+    description: "",
+    url: hostURL,
     tags: [
       "Skill 1",
-      "Skill 1",
-      "Skill 1",
-      "Skill 1",
-      "Skill 1",
-      "Skill 1",
-      "Skill 1",
+      "Skill 2",
+      "Skill 3",
+      "Skill 4",
+      "Skill 5",
+      "Skill 6",
+      "Skill 7",
     ],
-    hostID: "asdk290",
-    host: { name: "Creater", id: "asdk290" },
-    team: { name: "Team", id: "awd96" },
+    hostID: "",
+    host: { name: "Creater", id: "" },
+    team: { name: "Team", id: "" },
   };
-  return <Project project={project} />;
+  const data: { project?: ProjectInterface; error?: string } = await fetch(
+    `${hostURL}/api/project?id=${params.id}`,
+    {
+      method: "GET",
+    }
+  ).then((res) => res.json());
+  if (data?.error) notFound();
+  return <Project project={data?.project || defaultProject} />;
 }

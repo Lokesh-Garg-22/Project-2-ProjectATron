@@ -1,12 +1,7 @@
 import MainContainer from "@/components/global/MainContainer";
-import ListRenderer from "@/components/Wrapper/ListRenderer";
-import { type ProjectInterface } from "@/components/Project/interface";
-import ProjectCard from "@/components/Project/ProjectCard";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { type ProjectInterface } from "@/lib/interface/project/interface";
 import {
   TypographyH1,
-  TypographyH2,
   TypographyH3,
   TypographyH4,
   TypographyP,
@@ -19,7 +14,10 @@ export default function Project({ project }: { project: ProjectInterface }) {
   for (let i in project.tags) {
     if (parseInt(i) != 0) {
       tags.push(
-        <div key={i} className="h-6 border-accent-foreground border" />
+        <div
+          key={project.tags.length + i}
+          className="h-6 border-accent-foreground border"
+        />
       );
     }
     tags.push(<span key={i}>{project.tags[i]}</span>);
@@ -60,13 +58,7 @@ export default function Project({ project }: { project: ProjectInterface }) {
           )}
         </div>
       </div>
-      <TypographyP>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit
-        quaerat, quod, sit culpa dolorem unde dolore laudantium, consequuntur
-        quas iure odio optio assumenda natus amet iste voluptates et harum
-        placeat? Animi assumenda, ex ducimus esse ad vel in enim, maxime,
-        explicabo error iusto accusantium? Id quo iste illo quia beatae!
-      </TypographyP>
+      <TypographyP>{project.description}</TypographyP>
     </MainContainer>
   );
 }

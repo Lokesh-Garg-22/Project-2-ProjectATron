@@ -1,21 +1,28 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TypographyH1 } from "@/components/ui/Typography";
-import Login from "../user/login";
-import SignUp from "../user/signUp";
 import Link from "next/link";
 import LoginDialog from "../user/loginDialog";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 export default function NavBar() {
+  const [login, setLogin] = useState(false);
+  useEffect(() => {
+    if (!!window && window.localStorage.getItem("username")) setLogin(true);
+    else setLogin(false);
+  }, []);
+  const LoginButton = () => (
+    <LoginDialog
+      DialogTriggerButton={({ children }: { children: ReactNode }) => (
+        <Button asChild className="text-sm font-semibold">
+          {children}
+        </Button>
+      )}
+    />
+  );
+
   return (
     <>
       <nav className="w-full h-16 fixed bg-background border-b">
@@ -27,17 +34,20 @@ export default function NavBar() {
               </TypographyH1>
             </Link>
             <div className="p-1">
-              <LoginDialog
-                DialogTriggerButton={({
-                  children,
-                }: {
-                  children: ReactNode;
-                }) => (
-                  <Button asChild className="text-sm font-semibold">
-                    {children}
-                  </Button>
-                )}
-              />
+              <LoginButton />
+              {/* TODO */}
+              {login ? (
+                <Avatar>
+                  <AvatarFallback>
+                    {window.localStorage
+                      .getItem("username")
+                      ?.charAt(0)
+                      .toUpperCase() || "U"}
+                  </AvatarFallback>
+                </Avatar>
+              ) : (
+                <LoginButton />
+              )}
             </div>
           </div>
         </div>

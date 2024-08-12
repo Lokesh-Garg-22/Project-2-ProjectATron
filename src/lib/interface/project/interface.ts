@@ -1,6 +1,7 @@
 export interface ProjectInterface {
   name: string;
   id: string;
+  description?: string;
   tags: Array<string | null>;
   hostID: string;
   teamID?: string;

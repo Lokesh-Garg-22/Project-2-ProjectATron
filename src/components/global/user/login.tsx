@@ -11,7 +11,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
+import { userSchema } from "@/lib/db/models/User";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -29,20 +31,28 @@ export default function Login() {
     },
   });
   const { toast } = useToast();
+  const [active, setActive] = useState(true);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const res = await fetch(
-      `/api/user/login?username=${values.username}&password=${values.password}`,
-      {
-        method: "GET",
-      }
-    ).then((res) => res.json());
+    if (!active) return;
+    setActive(false);
+    const res: { msg: string; user: userSchema } & { error: string } =
+      await fetch(
+        `/api/user/login?username=${values.username}&password=${values.password}`,
+        {
+          method: "GET",
+        }
+      ).then((res) => res.json());
     if (!!res?.error) {
       toast({ title: res.error });
+      setActive(true);
     } else {
       //TODO: Login
       console.log(res);
+      window.localStorage.setItem("username", res.user.username);
+      window.localStorage.setItem("password", res.user.password);
       toast({ title: "Logged in Successfully" });
+      setActive(true);
     }
   }
 
@@ -76,7 +86,9 @@ export default function Login() {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button disabled={!active} type="submit">
+            Submit
+          </Button>
         </form>
       </Form>
     </>

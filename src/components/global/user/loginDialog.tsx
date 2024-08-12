@@ -2,6 +2,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -22,6 +23,8 @@ export default function LoginDialog({
         <DialogTrigger>{DialogTriggerText}</DialogTrigger>
       </DialogTriggerButton>
       <DialogContent>
+        <DialogTitle></DialogTitle>
+        <DialogDescription className="hidden"></DialogDescription>
         <Tabs defaultValue="login" className="">
           <TabsList className="w-full">
             <TabsTrigger value="login" className="grow">

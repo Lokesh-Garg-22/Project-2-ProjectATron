@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 export interface projectSchema {
   name: String;
   tags: String[];
-  discription?: String;
+  description?: String;
   url?: String;
   teamID?: String;
   userID: String;
@@ -12,7 +12,7 @@ export interface projectSchema {
 const projectSchema = new mongoose.Schema<projectSchema>({
   name: String,
   tags: [String],
-  discription: String,
+  description: String,
   url: { type: String, required: false },
   teamID: String,
   userID: String,

@@ -27,17 +27,20 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Textarea } from "@/components/ui/textarea";
 import { TypographyH1 } from "@/components/ui/Typography";
 import { useToast } from "@/components/ui/use-toast";
 import SelectSearchCommandRender from "@/components/Wrapper/SelectSearchInputRender";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronsUpDownIcon } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
+  description: z.string(),
   url: z.string(),
   team: z.string(),
   tags: z.array(z.string()),
@@ -48,12 +51,14 @@ export default function CreateProject() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+      description: "",
       url: "",
       team: "",
       tags: [],
     },
   });
   const { toast } = useToast();
+  const [active, setActive] = useState(true);
 
   const teamsList = [
     { label: "1", value: "1" },
@@ -67,28 +72,32 @@ export default function CreateProject() {
   ];
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    const res = await fetch(
-      `/api/create/project?name=${values.name}&password=${values.tags}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username: "example" }),
-      }
-    ).then((res) => res.json());
+    if (!active) return;
+    setActive(false);
+    const res = await fetch(`/api/project/create`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...values,
+        username: window.localStorage.getItem("username"),
+        password: window.localStorage.getItem("password"),
+      }),
+    }).then((res) => res.json());
     if (!!res?.error) {
       toast({ title: res.error });
+      setActive(true);
     } else {
-      //TODO: SignUp
+      // TODO
       console.log(res);
-      toast({ title: "Account Created Successfully" });
+      toast({ title: "Project Created Successfully" });
+      setActive(true);
     }
   }
 
   return (
-    <div className="h-[calc(100vh-4rem)] grow bg-[url('/a-stunning-digital-illustration-with-a-dominant-bl.jpeg')] bg-no-repeat bg-contain bg-left bg-[#0000ff]/50 bg-blend-darken">
+    <div className="min-h-[calc(100vh-4rem)] grow bg-[url('/a-stunning-digital-illustration-with-a-dominant-bl.jpeg')] bg-no-repeat bg-contain bg-fixed bg-left bg-[#0000ff]/50 bg-blend-darken">
       <div className="ml-auto px-8 py-4 h-full w-1/2 max-w-3xl bg-background grow flex flex-col gap-2">
         <TypographyH1 className="text-center">Create New Project</TypographyH1>
         <Form {...form}>
@@ -113,6 +122,19 @@ export default function CreateProject() {
             />
             <FormField
               control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="Project Description" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="url"
               render={({ field }) => (
                 <FormItem>
@@ -124,6 +146,7 @@ export default function CreateProject() {
                 </FormItem>
               )}
             />
+            {/* TODO Team Id Search */}
             <FormField
               control={form.control}
               name="team"
@@ -181,8 +204,10 @@ export default function CreateProject() {
               )}
             />
             <Dialog>
-              <DialogTrigger>
-                <Button type="submit">Submit</Button>
+              <DialogTrigger asChild>
+                <Button disabled={!active} type="submit">
+                  Submit
+                </Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
@@ -190,11 +215,15 @@ export default function CreateProject() {
                   <DialogDescription></DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
-                  <Button type="submit" onClick={form.handleSubmit(onSubmit)}>
+                  <Button
+                    disabled={!active}
+                    type="submit"
+                    onClick={form.handleSubmit(onSubmit)}
+                  >
                     Submit
                   </Button>
                   <DialogClose asChild>
-                    <Button>Cancle</Button>
+                    <Button>Cancel</Button>
                   </DialogClose>
                 </DialogFooter>
               </DialogContent>

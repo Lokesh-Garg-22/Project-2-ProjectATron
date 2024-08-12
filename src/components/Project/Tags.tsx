@@ -13,7 +13,7 @@ export default function Tags({
   form?: undefined | { OnSubmit: (values: String[]) => void };
 }) {
   return (
-    <ScrollArea className="h-60 p-4 border rounded-lg">
+    <ScrollArea className="h-52 p-4 border rounded-lg">
       <div className="flex flex-wrap gap-4">
         {form && (
           <Popover>
