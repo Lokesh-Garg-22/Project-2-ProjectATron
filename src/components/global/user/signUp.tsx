@@ -43,7 +43,9 @@ export default function SignUp() {
     setActive(false);
     const res: { msg: string; user: userSchema } & { error: string } =
       await fetch(
-        `/api/user/signup?username=${values.username}&password=${values.password}`,
+        `/api/user/signup?username=${values.username.toLowerCase()}&password=${
+          values.password
+        }`,
         {
           method: "GET",
         }

@@ -1,6 +1,5 @@
 "use client";
 
-import MainContainer from "@/components/global/MainContainer";
 import Users from "@/components/Team/Users";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,6 +23,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { TypographyH1 } from "@/components/ui/Typography";
 import { useToast } from "@/components/ui/use-toast";
+import { ProfileInterface } from "@/lib/interface/profile/interface";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { act, useState } from "react";
@@ -43,48 +43,16 @@ const formSchema = z.object({
   ),
 });
 
-export default function CreateTeam() {
+export default function CreateTeam({
+  UserList,
+}: {
+  UserList: ProfileInterface[];
+}) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      users: [
-        {
-          name: "User 1",
-          username: "user 1",
-          id: "23ed",
-          projects: 0,
-          about: "Hi",
-        },
-        {
-          name: "User 2",
-          username: "user 2",
-          id: "23ed",
-          projects: 0,
-          about: "Hi",
-        },
-        {
-          name: "User 3",
-          username: "user 3",
-          id: "23ed",
-          projects: 0,
-          about: "Hi",
-        },
-        {
-          name: "User 4",
-          username: "user 4",
-          id: "23ed",
-          projects: 0,
-          about: "Hi",
-        },
-        {
-          name: "User 5",
-          username: "user 5",
-          id: "23ed",
-          projects: 0,
-          about: "Hi",
-        },
-      ],
+      users: [],
     },
   });
   const { toast } = useToast();
@@ -120,7 +88,7 @@ export default function CreateTeam() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] grow bg-[url('/a-stunning-digital-illustration-with-a-dominant-bl.jpeg')] bg-no-repeat bg-contain bg-fixed bg-left bg-[#0000ff]/50 bg-blend-darken">
+    <div className="min-h-[calc(100vh-4rem)] grow bg-[url('/a-stunning-digital-illustration-with-a-dominant-bl.jpeg')] bg-no-repeat bg-contain bg-fixed bg-[20%] bg-[#0000ff]/50 bg-blend-darken">
       <div className="ml-auto px-8 py-4 h-full w-1/2 max-w-3xl bg-background grow flex flex-col gap-2">
         <TypographyH1 className="text-center my-4">
           Create New Team
@@ -145,7 +113,6 @@ export default function CreateTeam() {
                 </FormItem>
               )}
             />
-            {/* TODO Users List */}
             <FormField
               control={form.control}
               name="users"
@@ -155,7 +122,7 @@ export default function CreateTeam() {
                   <FormControl>
                     <Users
                       values={field.value}
-                      form={{ OnSubmit: field.onChange, UserList: field.value }}
+                      form={{ OnSubmit: field.onChange, UserList: UserList }}
                     />
                   </FormControl>
                   <FormMessage />
@@ -163,7 +130,7 @@ export default function CreateTeam() {
               )}
             />
             <Dialog>
-              <DialogTrigger>
+              <DialogTrigger asChild>
                 <Button disabled={!active} type="submit">
                   Submit
                 </Button>

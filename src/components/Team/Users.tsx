@@ -39,13 +39,9 @@ export default function Users({
                     return { label: ele.name, value: ele.username };
                   })}
                   onSelect={(value) => {
-                    const user: ProfileInterface = {
-                      name: "awub",
-                      username: value,
-                      id: "097awd",
-                      about: "awd",
-                      projects: 0,
-                    };
+                    const user: ProfileInterface = form.UserList.filter(
+                      (ele) => ele.username == value
+                    )[0];
                     form.OnSubmit([...values, user]);
                   }}
                 />

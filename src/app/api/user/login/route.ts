@@ -8,7 +8,7 @@ export const GET = TryCatch(async (req: Request) => {
   await dbConnect();
   const data = new URL(req.url).searchParams;
   const users: HydratedDocument<userSchema>[] = await User.find({
-    username: data.get("username"),
+    username: data.get("username")?.toLowerCase(),
   });
   if (users.length == 0) return NextResponse.json({ error: "User Not Found" });
   if (users[0].password != data.get("password"))

@@ -38,7 +38,9 @@ export default function Login() {
     setActive(false);
     const res: { msg: string; user: userSchema } & { error: string } =
       await fetch(
-        `/api/user/login?username=${values.username}&password=${values.password}`,
+        `/api/user/login?username=${values.username.toLowerCase()}&password=${
+          values.password
+        }`,
         {
           method: "GET",
         }
