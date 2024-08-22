@@ -59,6 +59,9 @@ export default function SignUp() {
       window.localStorage.setItem("username", res.user.username);
       window.localStorage.setItem("password", res.user.password);
       toast({ title: "Account Created Successfully" });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
       setActive(true);
     }
   }

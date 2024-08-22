@@ -15,6 +15,7 @@ import { User2Icon } from "lucide-react";
 import Link from "next/link";
 import { ReactNode } from "react";
 
+// TODO
 export default function Profile({
   profile,
   projects = [],

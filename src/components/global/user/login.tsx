@@ -54,6 +54,9 @@ export default function Login() {
       window.localStorage.setItem("username", res.user.username);
       window.localStorage.setItem("password", res.user.password);
       toast({ title: "Logged in Successfully" });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
       setActive(true);
     }
   }

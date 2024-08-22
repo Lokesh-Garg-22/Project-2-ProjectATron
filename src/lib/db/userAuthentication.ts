@@ -1,10 +1,12 @@
 import { HydratedDocument } from "mongoose";
-import { DateRequest } from "./interface";
+import { DataRequest } from "./interface";
 import User, { userSchema } from "./models/User";
 
-export default async function userAuthentication(req: DateRequest) {
+export default async function userAuthentication(req: DataRequest) {
   const { username, password }: { username: string; password: string } =
     req.data;
+  if (!username) throw new Error("Username not Provided");
+  if (!password) throw new Error("Password not Provided");
   const users: HydratedDocument<userSchema>[] = await User.find({
     username: username,
   });

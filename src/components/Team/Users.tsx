@@ -42,6 +42,7 @@ export default function Users({
                     const user: ProfileInterface = form.UserList.filter(
                       (ele) => ele.username == value
                     )[0];
+                    for (let i of values) if (i.username == value) return;
                     form.OnSubmit([...values, user]);
                   }}
                 />

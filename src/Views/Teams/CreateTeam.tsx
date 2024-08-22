@@ -23,31 +23,22 @@ import {
 import { Input } from "@/components/ui/input";
 import { TypographyH1 } from "@/components/ui/Typography";
 import { useToast } from "@/components/ui/use-toast";
+import BgImageDiv from "@/components/Wrapper/BgImageDiv";
+import { teamSchema } from "@/lib/db/models/Team";
+import { userSchema } from "@/lib/db/models/User";
 import { ProfileInterface } from "@/lib/interface/profile/interface";
-import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { act, useState } from "react";
+import { HydratedDocument } from "mongoose";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
-  users: z.array(
-    z.object({
-      name: z.string(),
-      username: z.string(),
-      about: z.string(),
-      projects: z.number(),
-      id: z.string(),
-    })
-  ),
+  users: z.array(z.any()),
 });
 
-export default function CreateTeam({
-  UserList,
-}: {
-  UserList: ProfileInterface[];
-}) {
+export default function CreateTeam() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -57,38 +48,75 @@ export default function CreateTeam({
   });
   const { toast } = useToast();
   const [active, setActive] = useState(true);
+  const [UserList, setUserList] = useState<ProfileInterface[]>([]);
+
+  useEffect(() => {
+    if (typeof window == "undefined") return;
+    (async () => {
+      const result: ProfileInterface[] = await fetch("/api/user/list", {
+        method: "Get",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((res) =>
+          res.map((ele: HydratedDocument<userSchema>) => {
+            return { ...ele, id: ele._id };
+          })
+        );
+      setUserList(result);
+    })();
+  }, []);
 
   async function onSubmit(
     values: z.infer<typeof formSchema> & { userIDs?: string[] }
   ) {
     if (!active) return;
     setActive(false);
-    values.userIDs = values.users.map((ele) => ele.id);
-    const res = await fetch(`/api/create/team`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: values.name,
-        userIDs: values.userIDs,
-        username: window.localStorage.getItem("username"),
-        password: window.localStorage.getItem("password"),
-      }),
-    }).then((res) => res.json());
-    if (!!res?.error) {
-      toast({ title: res.error });
+    try {
+      values.userIDs = values.users.map((ele) => ele.id);
+      const res = await fetch(`/api/team/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: values.name,
+          userIDs: values.userIDs,
+          username: window.localStorage.getItem("username"),
+          password: window.localStorage.getItem("password"),
+        }),
+      })
+        .then((res) => res.json())
+        .then(
+          (res: {
+            [index: string]: any;
+            team?: HydratedDocument<teamSchema>;
+          }) => {
+            if (res.team) res.team.id = res?.team?._id;
+            return res;
+          }
+        );
+      if (!!res?.error) {
+        toast({ title: res.error });
+        setActive(true);
+      } else {
+        console.log(res);
+        toast({ title: "Team Created Successfully" });
+        setTimeout(() => {
+          window.location.href = `/app/team/${res.team?.id}`;
+        }, 1000);
+        setActive(true);
+      }
+    } catch (err) {
       setActive(true);
-    } else {
-      // TODO
-      console.log(res);
-      toast({ title: "Team Created Successfully" });
-      setActive(true);
+      console.error(err);
     }
   }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] grow bg-[url('/a-stunning-digital-illustration-with-a-dominant-bl.jpeg')] bg-no-repeat bg-contain bg-fixed bg-[20%] bg-[#0000ff]/50 bg-blend-darken">
+    <BgImageDiv>
       <div className="ml-auto px-8 py-4 h-full w-1/2 max-w-3xl bg-background grow flex flex-col gap-2">
         <TypographyH1 className="text-center my-4">
           Create New Team
@@ -157,6 +185,6 @@ export default function CreateTeam({
           </form>
         </Form>
       </div>
-    </div>
+    </BgImageDiv>
   );
 }

@@ -4,6 +4,7 @@ import { ProfileInterface } from "@/components/Profile/interface";
 import ProfileCard from "@/components/Profile/ProfileCard";
 import SearchBar from "@/components/search/SearchBar";
 
+// TODO
 export default function Profiles() {
   const profiles: Array<ProfileInterface> = [
     { name: "Profile 1", about: "About You", projects: 1, id: "awd234" },
