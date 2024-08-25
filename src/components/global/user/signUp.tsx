@@ -54,8 +54,6 @@ export default function SignUp() {
       toast({ title: res.error });
       setActive(true);
     } else {
-      //TODO: SignUp
-      console.log(res);
       window.localStorage.setItem("username", res.user.username);
       window.localStorage.setItem("password", res.user.password);
       toast({ title: "Account Created Successfully" });

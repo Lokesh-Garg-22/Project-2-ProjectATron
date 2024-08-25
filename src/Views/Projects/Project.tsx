@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/Typography";
 import Link from "next/link";
 import { ReactNode } from "react";
+import { urlParse } from "@/lib/utils";
 
 export default function Project({ project }: { project: ProjectInterface }) {
   const tags: Array<ReactNode> = [];
@@ -30,9 +31,9 @@ export default function Project({ project }: { project: ProjectInterface }) {
           <TypographyH1>{project.name}</TypographyH1>
           <div className="flex">
             <TypographyH3>Created By: </TypographyH3>
-            <Link href={"/app/profile/" + project.hostID}>
+            <Link href={"/app/profile/" + project.userID}>
               <TypographyH3 className="ml-2 hover:scale-105">
-                {project?.host?.name || "Creater"}
+                {project?.user?.name}
               </TypographyH3>
             </Link>
           </div>
@@ -41,7 +42,7 @@ export default function Project({ project }: { project: ProjectInterface }) {
               <TypographyH3>Team:</TypographyH3>
               <Link href={"/app/team/" + project.team?.id}>
                 <TypographyH3 className="ml-2 hover:scale-105">
-                  {project.team?.name || "Team"}
+                  {project.team?.name}
                 </TypographyH3>
               </Link>
             </div>
@@ -50,7 +51,7 @@ export default function Project({ project }: { project: ProjectInterface }) {
         <div className="flex flex-col justify-center items-center space-y-5">
           <div className="flex gap-2">{tags}</div>
           {project.url && (
-            <Link href={project.url} className="mx-2">
+            <Link href={urlParse(project.url as string)} className="mx-2">
               <TypographyH4 className="w-fit hover:scale-105">
                 Visit Site
               </TypographyH4>

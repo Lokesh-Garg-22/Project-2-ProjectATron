@@ -49,8 +49,6 @@ export default function Login() {
       toast({ title: res.error });
       setActive(true);
     } else {
-      //TODO: Login
-      console.log(res);
       window.localStorage.setItem("username", res.user.username);
       window.localStorage.setItem("password", res.user.password);
       toast({ title: "Logged in Successfully" });

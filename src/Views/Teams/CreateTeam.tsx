@@ -70,12 +70,12 @@ export default function CreateTeam() {
   }, []);
 
   async function onSubmit(
-    values: z.infer<typeof formSchema> & { userIDs?: string[] }
+    values: z.infer<typeof formSchema> & { userIds?: string[] }
   ) {
     if (!active) return;
     setActive(false);
     try {
-      values.userIDs = values.users.map((ele) => ele.id);
+      values.userIds = values.users.map((ele) => ele.id);
       const res = await fetch(`/api/team/create`, {
         method: "POST",
         headers: {
@@ -83,7 +83,7 @@ export default function CreateTeam() {
         },
         body: JSON.stringify({
           name: values.name,
-          userIDs: values.userIDs,
+          userIDs: values.userIds,
           username: window.localStorage.getItem("username"),
           password: window.localStorage.getItem("password"),
         }),

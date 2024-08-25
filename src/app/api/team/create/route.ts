@@ -13,8 +13,8 @@ export const POST = TryCatch(async (req: DataRequest) => {
   await userAuthentication(req);
   const team: HydratedDocument<teamSchema> = new Team({
     name: req.data.name as string,
-    hostID: req.data.userID as string,
-    userIDs: req.data.userIDs as string[],
+    hostID: req.data.userId as string,
+    userIDs: req.data.userIds as string[],
   });
   await team.save();
   return NextResponse.json({ team: team });

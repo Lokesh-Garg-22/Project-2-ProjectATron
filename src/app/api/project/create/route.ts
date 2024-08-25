@@ -13,11 +13,11 @@ export const POST = TryCatch(async (req: DataRequest) => {
   await userAuthentication(req);
   const project: HydratedDocument<projectSchema> = new Project({
     name: req.data.name as string,
-    userID: req.data.userID as string,
+    userID: req.data.userId as string,
     tags: req.data.tags as string[],
-    description: req.data.discription as String,
+    description: req.data.description as String,
     url: req.data.url as String,
-    teamID: req.data.teamID as String,
+    teamID: req.data.team as String,
   });
   await project.save();
   return NextResponse.json({ project: project });

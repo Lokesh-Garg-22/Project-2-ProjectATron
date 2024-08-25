@@ -3,9 +3,9 @@ export interface ProjectInterface {
   id: string;
   description?: string;
   tags: Array<string | null>;
-  hostID: string;
+  userID: string;
   teamID?: string;
-  host?: { name: string; id: string };
+  user?: { name: string; id: string };
   team?: { name: string; id: string };
   url?: string;
 }

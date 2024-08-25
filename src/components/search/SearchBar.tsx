@@ -8,9 +8,9 @@ export default function SearchBar({
   className?: string | object;
 }) {
   return (
-    <div className={cn("flex w-full max-w-3xl gap-2", className)}>
-      <Input placeholder="Search" />
+    <form className={cn("flex w-full max-w-3xl gap-2", className)}>
+      <Input placeholder="Search" name="search" />
       <Button type="submit">Search</Button>
-    </div>
+    </form>
   );
 }

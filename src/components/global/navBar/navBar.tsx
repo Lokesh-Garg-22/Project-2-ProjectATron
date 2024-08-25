@@ -6,6 +6,13 @@ import Link from "next/link";
 import LoginDialog from "../user/loginDialog";
 import { ReactNode, useEffect, useState } from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import Logout, { logout } from "../user/logout";
 
 export default function NavBar() {
   const [login, setLogin] = useState(false);
@@ -34,17 +41,24 @@ export default function NavBar() {
               </TypographyH1>
             </Link>
             <div className="p-1">
-              <LoginButton />
-              {/* TODO */}
               {login ? (
-                <Avatar>
-                  <AvatarFallback>
-                    {window.localStorage
-                      .getItem("username")
-                      ?.charAt(0)
-                      .toUpperCase() || "U"}
-                  </AvatarFallback>
-                </Avatar>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <Avatar>
+                      <AvatarFallback>
+                        {window.localStorage
+                          .getItem("username")
+                          ?.charAt(0)
+                          .toUpperCase() || "U"}
+                      </AvatarFallback>
+                    </Avatar>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem onClick={logout}>
+                      <Logout />
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               ) : (
                 <LoginButton />
               )}

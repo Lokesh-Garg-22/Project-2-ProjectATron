@@ -49,11 +49,11 @@ export default async function Page({ params }: { params: { id: string } }) {
     ],
   };
   const defaultProjects: Array<ProjectInterface> = [
-    { name: "Project 1", id: "awd234", hostID: "awd892", tags: ["1"] },
-    { name: "Project 2", id: "a46tdi", hostID: "awd892", tags: ["2"] },
-    { name: "Project 3", id: "aw456d", hostID: "awd892", tags: ["3"] },
-    { name: "Project 4", id: "awd5yh", hostID: "awd892", tags: ["4"] },
-    { name: "Project 5", id: "awd223", hostID: "awd892", tags: ["5"] },
+    { name: "Project 1", id: "awd234", userID: "awd892", tags: ["1"] },
+    { name: "Project 2", id: "a46tdi", userID: "awd892", tags: ["2"] },
+    { name: "Project 3", id: "aw456d", userID: "awd892", tags: ["3"] },
+    { name: "Project 4", id: "awd5yh", userID: "awd892", tags: ["4"] },
+    { name: "Project 5", id: "awd223", userID: "awd892", tags: ["5"] },
   ];
 
   return (

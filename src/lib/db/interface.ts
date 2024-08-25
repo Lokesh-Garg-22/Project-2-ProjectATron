@@ -1,7 +1,7 @@
 export type DataRequest = Request & {
   data: {
     [index: string]: any;
-    userID?: string;
+    userId?: string;
     username?: string;
     passwrod?: string;
   };
