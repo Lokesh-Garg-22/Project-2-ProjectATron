@@ -7,15 +7,19 @@ export default function ListRenderer<P>({
   list,
   className,
   placeholder = "Empty!!",
+  loading,
 }: {
   ItemComponent: (data: P, id: number) => ReactNode;
   list: Array<P>;
   className?: string | object;
   placeholder?: string;
+  loading?: boolean;
 }) {
   return (
     <div className={cn("flex flex-wrap justify-center gap-4", className)}>
-      {list.length > 0 ? (
+      {loading ? (
+        <TypographyH3>Loading...</TypographyH3>
+      ) : list.length > 0 ? (
         list.map(ItemComponent)
       ) : (
         <TypographyH3>{placeholder}</TypographyH3>

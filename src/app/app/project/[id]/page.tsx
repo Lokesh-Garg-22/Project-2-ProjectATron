@@ -28,6 +28,9 @@ export default async function Page({ params }: { params: { id: string } }) {
       .then((res) => res.json())
       .then((res) => {
         return { name: res.user.name, id: res.user._id };
+      })
+      .catch(() => {
+        return { name: "", id: data.project?.userID };
       })) as { name: string; id: string };
     if (data.project.teamID)
       data.project.team = (await fetch(
@@ -39,6 +42,9 @@ export default async function Page({ params }: { params: { id: string } }) {
         .then((res) => res.json())
         .then((res) => {
           return { name: res.team.name, id: res.team._id };
+        })
+        .catch(() => {
+          return { name: "", id: data.project?.teamID };
         })) as { name: string; id: string };
   }
   return <Project project={data?.project as ProjectInterface} />;

@@ -21,7 +21,6 @@ export default async function Projects(
         headers: {
           "Content-type": "application/json",
         },
-        next: { revalidate: 0 },
       }
     )
       .then((res) => res.json())

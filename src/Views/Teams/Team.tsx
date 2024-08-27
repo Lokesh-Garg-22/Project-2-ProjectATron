@@ -1,8 +1,8 @@
 import MainContainer from "@/components/global/MainContainer";
 import ListRenderer from "@/components/Wrapper/ListRenderer";
-import { ProjectInterface } from "@/components/Project/interface";
+import { ProjectInterface } from "@/lib/interface/project/interface";
 import ProjectCard from "@/components/Project/ProjectCard";
-import { type TeamInterface } from "@/components/Team/interface";
+import { TeamInterface } from "@/lib/interface/team/interface";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
   TypographyH1,
@@ -28,7 +28,7 @@ export default function Team({
             <TypographyH3>Created By:</TypographyH3>
             <Link href={"/app/profile/" + team.hostID}>
               <TypographyH3 className="ml-2 hover:scale-105">
-                {team?.host?.name || "Creater"}
+                {team?.host?.name || ""}
               </TypographyH3>
             </Link>
           </div>

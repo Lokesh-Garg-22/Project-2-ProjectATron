@@ -1,3 +1,5 @@
+"use client";
+
 import MainContainer from "@/components/global/MainContainer";
 import PersonalProfileCard from "@/components/Profile/PersonalProfileCard";
 import PinnedProjectCard from "@/components/Project/PinnedProjectCard";
