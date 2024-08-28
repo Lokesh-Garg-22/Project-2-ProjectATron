@@ -33,6 +33,5 @@ export default async function Page({ params }: { params: { id: string } }) {
           return { ...ele, id: ele._id };
         });
     })) as ProjectInterface[];
-  console.log(profile);
   return <Profile profile={profile} projects={projects} />;
 }

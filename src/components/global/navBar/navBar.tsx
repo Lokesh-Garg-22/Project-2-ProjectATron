@@ -54,6 +54,8 @@ export default function NavBar() {
                     </Avatar>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
+                    {/* TODO: Edit Profile */}
+                    <DropdownMenuItem>Edit Profile</DropdownMenuItem>
                     <DropdownMenuItem onClick={logout}>
                       <Logout />
                     </DropdownMenuItem>
