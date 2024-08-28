@@ -1,7 +1,8 @@
 import MainContainer from "@/components/global/MainContainer";
 import ListRenderer from "@/components/Wrapper/ListRenderer";
-import { ProjectInterface } from "@/lib/interface/project/interface";
 import ProjectCard from "@/components/Project/ProjectCard";
+import { ProjectInterface } from "@/lib/interface/project/interface";
+import { ProfileInterface } from "@/lib/interface/profile/interface";
 import { TeamInterface } from "@/lib/interface/team/interface";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
@@ -11,6 +12,7 @@ import {
   TypographyH4,
 } from "@/components/ui/Typography";
 import Link from "next/link";
+import Users from "@/components/Team/Users";
 
 export default function Team({
   team,
@@ -33,23 +35,10 @@ export default function Team({
             </Link>
           </div>
         </div>
-        <Card>
-          <CardHeader className="p-2">
-            <TypographyH4>Members</TypographyH4>
-          </CardHeader>
-          <CardContent className="p-2 w-48 h-40 flex flex-col overflow-y-scroll">
-            {team?.users &&
-              team.users.map((ele, id) => (
-                <Link
-                  key={id}
-                  href={"/app/profile/" + ele.id}
-                  className="px-1 hover:bg-secondary"
-                >
-                  {ele.name}
-                </Link>
-              ))}
-          </CardContent>
-        </Card>
+        <Users
+          values={team.users as ProfileInterface[]}
+          classname="w-60 h-60"
+        />
       </div>
       <div className="w-full my-2 mx-3 border rounded-full" />
       <ListRenderer

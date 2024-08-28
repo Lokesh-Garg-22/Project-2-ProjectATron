@@ -1,4 +1,4 @@
-import Authenticate from "@/components/Authenticate";
+import Authenticate from "@/components/global/Authenticate";
 import SideNav from "@/components/global/sideNav/sideNav";
 
 export default function Layout({

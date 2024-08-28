@@ -1,21 +1,15 @@
 import MainContainer from "@/components/global/MainContainer";
 import ListRenderer from "@/components/Wrapper/ListRenderer";
-import { ProfileInterface } from "@/components/Profile/interface";
-import { type ProjectInterface } from "@/components/Project/interface";
+import { ProfileInterface } from "@/lib/interface/profile/interface";
+import { type ProjectInterface } from "@/lib/interface/project/interface";
 import ProjectCard from "@/components/Project/ProjectCard";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
   TypographyH1,
-  TypographyH2,
-  TypographyH3,
   TypographyH4,
   TypographyP,
 } from "@/components/ui/Typography";
 import { User2Icon } from "lucide-react";
-import Link from "next/link";
-import { ReactNode } from "react";
 
-// TODO
 export default function Profile({
   profile,
   projects = [],
@@ -26,7 +20,7 @@ export default function Profile({
   return (
     <MainContainer>
       <div className="flex my-4 mx-4">
-        <div className="grow space-y-3">
+        <div className="w-9/12 space-y-3">
           <TypographyH1>{profile.name}</TypographyH1>
           <TypographyH4 className="max-w-[70%]">{profile.about}</TypographyH4>
           <TypographyP className="font-bold">

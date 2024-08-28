@@ -6,12 +6,15 @@ import { MinusCircleIcon, PlusCircleIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import SelectSearchCommandRender from "../Wrapper/SelectSearchInputRender";
+import { cn } from "@/lib/utils";
 
 export default function Users({
   values,
+  classname,
   form,
 }: {
   values: ProfileInterface[];
+  classname?: string;
   form?: {
     OnSubmit: (values: ProfileInterface[]) => void;
     UserList: ProfileInterface[];
@@ -20,7 +23,7 @@ export default function Users({
   return (
     <Card>
       <CardContent className="px-0 py-3">
-        <ScrollArea className="h-72">
+        <ScrollArea className={cn("h-72", classname)}>
           {form && (
             <Popover>
               <PopoverTrigger asChild>

@@ -1,4 +1,5 @@
 import { hostURL } from "@/lib/data";
+import { ProfileInterface } from "@/lib/interface/profile/interface";
 import { ProjectInterface } from "@/lib/interface/project/interface";
 import { TeamInterface } from "@/lib/interface/team/interface";
 import { urlParse } from "@/lib/utils";
@@ -27,11 +28,11 @@ async function getTeam(id: string) {
     )
       .then((res) => res.json())
       .then((res) => {
-        return { name: res.user.name, id: res.user._id };
+        return { ...res.user, id: res.user._id };
       })
       .catch(() => {
-        return { name: "", id: data.team?.hostID };
-      })) as { name: string; id: string };
+        return { name: "", id: data.team?.hostID, username: "" };
+      })) as ProfileInterface;
     data.team.users = [];
     for (let ele of data.team.userIDs) {
       data.team.users?.push(
@@ -40,16 +41,17 @@ async function getTeam(id: string) {
         })
           .then((res) => res.json())
           .then((res) => {
-            return { name: res.user.name, id: res.user._id };
+            return { ...res.user, id: res.user._id };
           })
           .catch(() => {
-            return { name: "", id: ele };
-          })) as { name: string; id: string }
+            return { name: "", id: ele, username: "" };
+          })) as ProfileInterface
       );
     }
   }
   return data.team;
 }
+
 async function getProjects(id: string) {
   const data: {
     projects?: ProjectInterface[];
@@ -72,7 +74,6 @@ async function getProjects(id: string) {
 }
 
 export default async function Page({ params }: { params: { id: string } }) {
-  // TODO to check
   const data: {
     team?: TeamInterface;
     projects?: ProjectInterface[];
@@ -80,28 +81,6 @@ export default async function Page({ params }: { params: { id: string } }) {
     team: await getTeam(params.id),
     projects: await getProjects(params.id),
   };
-
-  // const defaultTeam: TeamInterface = {
-  //   name: "Team 1",
-  //   id: params.id,
-  //   hostID: "asdk290",
-  //   host: { name: "Creater", id: "asdk290" },
-  //   userIDs: ["aw89", "aw89", "aw89", "aw89", "aw89"],
-  //   users: [
-  //     { name: "User 1", id: "aw89" },
-  //     { name: "User 2", id: "aw89" },
-  //     { name: "User 3", id: "aw89" },
-  //     { name: "User 4", id: "aw89" },
-  //     { name: "User 5", id: "aw89" },
-  //   ],
-  // };
-  // const defaultProjects: Array<ProjectInterface> = [
-  //   { name: "Project 1", id: "awd234", userID: "awd892", tags: ["1"] },
-  //   { name: "Project 2", id: "a46tdi", userID: "awd892", tags: ["2"] },
-  //   { name: "Project 3", id: "aw456d", userID: "awd892", tags: ["3"] },
-  //   { name: "Project 4", id: "awd5yh", userID: "awd892", tags: ["4"] },
-  //   { name: "Project 5", id: "awd223", userID: "awd892", tags: ["5"] },
-  // ];
 
   return (
     <Team

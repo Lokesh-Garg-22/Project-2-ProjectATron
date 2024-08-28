@@ -1,34 +1,38 @@
-import { ProfileInterface } from "@/components/Profile/interface";
-import { ProjectInterface } from "@/components/Project/interface";
+import { hostURL } from "@/lib/data";
+import { ProfileInterface } from "@/lib/interface/profile/interface";
+import { ProjectInterface } from "@/lib/interface/project/interface";
+import { urlParse } from "@/lib/utils";
 import Profile from "@/Views/Profiles/Profile";
+import { notFound } from "next/navigation";
 
-export default function Page({ params }: { params: { id: string } }) {
-  const profile: ProfileInterface = {
-    name: "Profile",
-    id: params.id,
-    about:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eum quos architecto consequatur!",
-    projects: 2,
-  };
-  const projects: Array<ProjectInterface> = [
-    { name: "Project 1", id: "daui2", hostID: params.id, tags: ["tag"] },
+export default async function Page({ params }: { params: { id: string } }) {
+  const profile = (await fetch(
+    `${urlParse(hostURL)}/api/user?id=${params.id || ""}`,
     {
-      name: "Project 2",
-      id: "daui2",
-      hostID: params.id,
-      tags: ["tag"],
-      url: "www.google.co.in",
-    },
-    { name: "Project 3", id: "daui2", hostID: params.id, tags: ["tag"] },
-    { name: "Project 4", id: "daui2", hostID: params.id, tags: ["tag"] },
+      method: "GET",
+    }
+  )
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.error) notFound();
+      if (res.user) {
+        res.user.id = res.user._id;
+        return res.user;
+      }
+    })) as ProfileInterface;
+  const projects = (await fetch(
+    `${urlParse(hostURL)}/api/user/projects?id=${params.id || ""}`,
     {
-      name: "Project 5",
-      id: "daui2",
-      hostID: params.id,
-      tags: ["tag"],
-      url: "www.google.co.in",
-    },
-    { name: "Project 6", id: "daui2", hostID: params.id, tags: ["tag"] },
-  ];
+      method: "GET",
+    }
+  )
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.projects)
+        return res.projects.map((ele: any) => {
+          return { ...ele, id: ele._id };
+        });
+    })) as ProjectInterface[];
+  console.log(profile);
   return <Profile profile={profile} projects={projects} />;
 }

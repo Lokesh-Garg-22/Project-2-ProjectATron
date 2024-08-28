@@ -1,6 +1,5 @@
 import dbConnect from "@/lib/db/dbConnect";
 import Project from "@/lib/db/models/Project";
-import Team from "@/lib/db/models/Team";
 import TryCatch from "@/lib/db/utils/TryCatch";
 import { NextResponse } from "next/server";
 

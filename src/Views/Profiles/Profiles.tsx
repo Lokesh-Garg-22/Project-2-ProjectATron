@@ -1,19 +1,14 @@
 import MainContainer from "@/components/global/MainContainer";
 import ListRenderer from "@/components/Wrapper/ListRenderer";
-import { ProfileInterface } from "@/components/Profile/interface";
+import { ProfileInterface } from "@/lib/interface/profile/interface";
 import ProfileCard from "@/components/Profile/ProfileCard";
 import SearchBar from "@/components/search/SearchBar";
 
-// TODO
-export default function Profiles() {
-  const profiles: Array<ProfileInterface> = [
-    { name: "Profile 1", about: "About You", projects: 1, id: "awd234" },
-    { name: "Profile 2", about: "About You", projects: 1, id: "a46tdi" },
-    { name: "Profile 3", about: "About You", projects: 1, id: "aw456d" },
-    { name: "Profile 4", about: "About You", projects: 1, id: "awd5yh" },
-    { name: "Profile 5", about: "About You", projects: 1, id: "awd223" },
-  ];
-
+export default function Profiles({
+  profiles,
+}: {
+  profiles: ProfileInterface[];
+}) {
   return (
     <MainContainer className="items-center">
       <SearchBar />
