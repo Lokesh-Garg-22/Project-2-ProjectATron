@@ -1,14 +1,38 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { TeamInterface } from "../../lib/interface/team/interface";
+import { useEffect, useState } from "react";
+import { windowUsername, windowUserPassword } from "@/lib/data";
 
 export default function TeamsCard() {
-  const teams: Array<TeamInterface> = [
-    { name: "Team 1", id: "982hbkma" },
-    { name: "Team 1", id: "982hbkma" },
-    { name: "Team 1", id: "982hbkma" },
-    { name: "Team 1", id: "982hbkma" },
-  ];
+  const [teams, setTeams] = useState<TeamInterface[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      if (window) {
+        setLoading(true);
+        setTeams([
+          ...((await fetch(`/api/teams`, {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+              username: window.localStorage.getItem(windowUsername),
+              password: window.localStorage.getItem(windowUserPassword),
+            }),
+          })
+            .then((res) => res.json())
+            .then(async (res) => {
+              if (res?.teams) return res.teams;
+              return [];
+            })) as TeamInterface[]),
+        ]);
+        setLoading(false);
+      }
+    })();
+  }, []);
 
   return (
     <Card className="my-auto">
@@ -20,15 +44,19 @@ export default function TeamsCard() {
         </CardTitle>
       </CardHeader>
       <CardContent className="w-80 flex flex-col">
-        {teams.map((ele, id) => (
-          <Link
-            key={id}
-            href={"app/team/" + ele.id}
-            className="block w-full py-1 px-2 hover:bg-slate-50/10"
-          >
-            {ele.name}
-          </Link>
-        ))}
+        {loading
+          ? "Loading..."
+          : teams.length <= 0
+          ? "No Team Found!"
+          : teams.map((ele, id) => (
+              <Link
+                key={id}
+                href={"app/team/" + ele.id}
+                className="block w-full py-1 px-2 hover:bg-slate-50/10"
+              >
+                {ele.name}
+              </Link>
+            ))}
       </CardContent>
     </Card>
   );

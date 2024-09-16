@@ -1,17 +1,17 @@
-"use client";
-
-import MainContainer from "@/components/global/MainContainer";
-import ListRenderer from "@/components/Wrapper/ListRenderer";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
+import { ProjectInterface } from "../../lib/interface/project/interface";
 import { ProfileInterface } from "@/lib/interface/profile/interface";
-import ProfileCard from "@/components/Profile/ProfileCard";
-import SearchBar from "@/components/search/SearchBar";
 import { useEffect, useState } from "react";
 import { windowUsername, windowUserPassword } from "@/lib/data";
 
-export default function FollowedProfiles(
-  props: unknown & { searchParams: { search?: string } }
-) {
-  const [profiles, setProfiles] = useState<ProfileInterface[]>([]);
+export default function FollowedProfilesCard() {
+  const [profiles, setProfiles] = useState<ProfileInterface[]>([
+    { name: "Project 1", username: "", about: "", projects: 0, id: "982hbkma" },
+    { name: "Project 1", username: "", about: "", projects: 0, id: "982hbkma" },
+    { name: "Project 1", username: "", about: "", projects: 0, id: "982hbkma" },
+    { name: "Project 1", username: "", about: "", projects: 0, id: "982hbkma" },
+  ]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -27,7 +27,6 @@ export default function FollowedProfiles(
             body: JSON.stringify({
               username: window.localStorage.getItem(windowUsername),
               password: window.localStorage.getItem(windowUserPassword),
-              search: props.searchParams.search,
             }),
           })
             .then((res) => res.json())
@@ -54,14 +53,27 @@ export default function FollowedProfiles(
   }, []);
 
   return (
-    <MainContainer className="items-center">
-      <SearchBar />
-      <ListRenderer
-        list={profiles}
-        ItemComponent={(data, id) => <ProfileCard key={id} profile={data} />}
-        placeholder="No Profile Found!!"
-        loading={loading}
-      />
-    </MainContainer>
+    <Card className="my-auto">
+      <CardHeader>
+        <CardTitle>
+          <Link href="app/followedProfiles" className="hover:underline">
+            Followed Profiles
+          </Link>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="w-80 flex flex-col capitalize">
+        {loading
+          ? "Loading..."
+          : profiles.map((ele, id) => (
+              <Link
+                key={id}
+                href={"app/profile/" + ele.id}
+                className="block w-full py-1 px-2 hover:bg-slate-50/10"
+              >
+                {ele.name}
+              </Link>
+            ))}
+      </CardContent>
+    </Card>
   );
 }

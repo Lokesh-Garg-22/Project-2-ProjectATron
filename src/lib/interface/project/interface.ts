@@ -8,4 +8,5 @@ export interface ProjectInterface {
   user?: { name: string; id: string };
   team?: { name: string; id: string };
   url?: string;
+  pinned?: boolean;
 }

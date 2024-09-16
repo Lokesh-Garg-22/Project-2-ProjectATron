@@ -11,8 +11,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
+import { windowUserid, windowUsername, windowUserPassword } from "@/lib/data";
 import { userSchema } from "@/lib/db/models/User";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { HydratedDocument } from "mongoose";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -41,21 +43,24 @@ export default function SignUp() {
       return;
     }
     setActive(false);
-    const res: { msg: string; user: userSchema } & { error: string } =
-      await fetch(
-        `/api/user/signup?username=${values.username.toLowerCase()}&password=${
-          values.password
-        }`,
-        {
-          method: "GET",
-        }
-      ).then((res) => res.json());
+    const res: { msg: string; user: HydratedDocument<userSchema> } & {
+      error: string;
+    } = await fetch(
+      `/api/user/signup?username=${values.username.toLowerCase()}&password=${
+        values.password
+      }`,
+      {
+        method: "GET",
+      }
+    ).then((res) => res.json());
     if (!!res?.error) {
       toast({ title: res.error });
       setActive(true);
     } else {
-      window.localStorage.setItem("username", res.user.username);
-      window.localStorage.setItem("password", res.user.password);
+      res.user.id = res.user._id;
+      window.localStorage.setItem(windowUsername, res.user.username);
+      window.localStorage.setItem(windowUserid, res.user.id);
+      window.localStorage.setItem(windowUserPassword, res.user.password);
       toast({ title: "Account Created Successfully" });
       setTimeout(() => {
         window.location.reload();

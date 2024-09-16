@@ -9,5 +9,6 @@ export const GET = TryCatch(async (req: Request) => {
   const data = new URL(req.url).searchParams;
   const user = await User.findById(data.get("id"));
   user._doc.projects = (await Project.find({ userID: user._id })).length;
+  user._doc.password = "";
   return NextResponse.json({ user });
 });

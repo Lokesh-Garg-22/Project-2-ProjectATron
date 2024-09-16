@@ -7,6 +7,7 @@ export interface projectSchema {
   url?: String;
   teamID?: String;
   userID: String;
+  pinned?: Boolean;
 }
 
 const projectSchema = new mongoose.Schema<projectSchema>({
@@ -16,6 +17,7 @@ const projectSchema = new mongoose.Schema<projectSchema>({
   url: { type: String, required: false },
   teamID: String,
   userID: String,
+  pinned: { type: Boolean, default: false },
 });
 
 const Project =

@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 
 export interface followedUserSchema {
-  userID: String;
+  userId: String;
   followedIDs: String[];
 }
 
 const followedUserSchema = new mongoose.Schema<followedUserSchema>({
-  userID: String,
+  userId: String,
   followedIDs: [String],
 });
 

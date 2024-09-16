@@ -2,14 +2,28 @@ import { User2Icon } from "lucide-react";
 import { TypographyH3, TypographyH4, TypographyP } from "../ui/Typography";
 import { Card, CardContent } from "@/components/ui/card";
 import { ProfileInterface } from "../../lib/interface/profile/interface";
+import { useEffect, useState } from "react";
+import { windowUserid } from "@/lib/data";
 
 export default function PersonalProfileCard() {
-  const profile: ProfileInterface = {
-    name: "Name",
-    about: "About You",
-    projects: 1,
-    id: "928347",
-  };
+  const [profile, setProfile] = useState<ProfileInterface>();
+
+  useEffect(() => {
+    (async () => {
+      if (window) {
+        setProfile(
+          await fetch(
+            `/api/user?id=${window.localStorage.getItem(windowUserid)}`
+          )
+            .then((res) => res.json())
+            .then((res) => {
+              if (res?.user) return res.user;
+              return undefined;
+            })
+        );
+      }
+    })();
+  }, []);
 
   return (
     <Card className="my-auto">
@@ -19,12 +33,12 @@ export default function PersonalProfileCard() {
         </div>
         <div className="h-full border-2 rounded" />
         <div className="grow text-right">
-          <TypographyH3>{profile.name}</TypographyH3>
-          <TypographyH4>{profile.about}</TypographyH4>
+          <TypographyH3 className="capitalize">{profile?.name}</TypographyH3>
+          <TypographyH4>{profile?.about}</TypographyH4>
           <TypographyP>
             Projects
             <span className="bg-slate-50/10 hover:bg-slate-50/20 rounded-lg px-2 py-1 ml-2">
-              {profile.projects}
+              {profile?.projects}
             </span>
           </TypographyP>
         </div>

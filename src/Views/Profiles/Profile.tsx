@@ -12,8 +12,9 @@ import {
 } from "@/components/ui/Typography";
 import { LoaderCircleIcon, PlusIcon, User2Icon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import { windowUsername, windowUserPassword } from "@/lib/data";
 
 export default function Profile({
   profile,
@@ -22,18 +23,39 @@ export default function Profile({
   profile: ProfileInterface;
   projects?: Array<ProjectInterface>;
 }) {
-  const [followed, setFollowed] = useState(true);
+  const [followed, setFollowed] = useState(false);
   const [loadingFollow, setLoadingFollow] = useState(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    (async () => {
+      setFollowed(
+        await fetch("/api/user/follow/check", {
+          method: "POST",
+          cache: "no-cache",
+          body: JSON.stringify({
+            username: window.localStorage.getItem(windowUsername),
+            password: window.localStorage.getItem(windowUserPassword),
+            followId: profile.id,
+          }),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            if (res?.followed) return res.followed;
+            return false;
+          })
+      );
+    })();
+  }, []);
 
   async function onFollow() {
     setLoadingFollow(true);
     const followed = await fetch("/api/user/follow", {
       method: "POST",
-      next: { revalidate: 0 },
+      cache: "no-cache",
       body: JSON.stringify({
-        username: window.localStorage.getItem("username"),
-        password: window.localStorage.getItem("password"),
+        username: window.localStorage.getItem(windowUsername),
+        password: window.localStorage.getItem(windowUserPassword),
         followId: profile.id,
       }),
     })
@@ -60,10 +82,10 @@ export default function Profile({
     setLoadingFollow(true);
     const unfollowed = await fetch("/api/user/follow/unfollow", {
       method: "POST",
-      next: { revalidate: 0 },
+      cache: "no-cache",
       body: JSON.stringify({
-        username: window.localStorage.getItem("username"),
-        password: window.localStorage.getItem("password"),
+        username: window.localStorage.getItem(windowUsername),
+        password: window.localStorage.getItem(windowUserPassword),
         followId: profile.id,
       }),
     })

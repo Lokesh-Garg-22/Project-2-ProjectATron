@@ -12,5 +12,5 @@ export const GET = TryCatch(async (req: Request) => {
   const projects: HydratedDocument<projectSchema>[] = await Project.find({
     name: regex,
   });
-  return NextResponse.json(projects);
+  return NextResponse.json({ projects });
 });
