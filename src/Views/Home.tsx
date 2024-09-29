@@ -4,6 +4,7 @@ import { WebTitle } from "@/components/global/navBar/navBar";
 import LoginDialog from "@/components/global/user/loginDialog";
 import { Button } from "@/components/ui/button";
 import { TypographyH1, TypographyH2 } from "@/components/ui/Typography";
+import { windowUserid } from "@/lib/data";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
@@ -26,11 +27,12 @@ export default function Home() {
           <WebTitle />
         </TypographyH1>
         <div className="flex justify-center items-center p-10 my-5">
-          {(
+          {typeof window != "undefined" &&
+          window.localStorage.getItem(windowUserid) ? (
             <Button asChild>
               <Link href="/app">Get Started</Link>
             </Button>
-          ) || (
+          ) : (
             <LoginDialog
               DialogTriggerButton={({ children }: { children: ReactNode }) => (
                 <Button asChild>{children}</Button>
