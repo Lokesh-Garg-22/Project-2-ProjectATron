@@ -17,6 +17,6 @@ export const GET = TryCatch(async (req: Request) => {
     password: data.get("password") as string,
     name: data.get("username") as string,
   });
-  //[ ] await user.save();
+  await user.save();
   return NextResponse.json({ msg: "Success", user: user });
 });

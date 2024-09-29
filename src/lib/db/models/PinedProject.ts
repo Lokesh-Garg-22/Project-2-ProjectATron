@@ -1,17 +1,17 @@
 import mongoose from "mongoose";
 
-export interface pinedProjectSchema {
-  projectID: String;
-  userID: String;
+export interface pinnedProjectSchema {
+  userId: String;
+  projectIDs: String[];
 }
 
-const pinedProjectSchema = new mongoose.Schema<pinedProjectSchema>({
-  projectID: String,
-  userID: String,
+const pinnedProjectSchema = new mongoose.Schema<pinnedProjectSchema>({
+  userId: String,
+  projectIDs: [String],
 });
 
-const PinedProject =
-  mongoose.models.PinedProject<pinedProjectSchema> ||
-  mongoose.model<pinedProjectSchema>("PinedProject", pinedProjectSchema);
+const PinnedProject =
+  mongoose.models.PinedProject<pinnedProjectSchema> ||
+  mongoose.model<pinnedProjectSchema>("PinedProject", pinnedProjectSchema);
 
-export default PinedProject;
+export default PinnedProject;

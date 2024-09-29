@@ -34,8 +34,8 @@ export default function Teams(
             }),
           })
             .then((res) => res.json())
-            .then((res: HydratedDocument<teamSchema>[]) =>
-              res.map((ele) => {
+            .then((res: { teams: HydratedDocument<teamSchema>[] }) =>
+              res.teams.map((ele) => {
                 return { ...ele, id: ele._id };
               })
             )) as TeamInterface[]),
@@ -47,7 +47,7 @@ export default function Teams(
 
   return (
     <MainContainer className="my-4 items-center space-y-4">
-      <SearchBar />
+      <SearchBar defaultValue={props.searchParams.search} />
       <ListRenderer
         list={teams}
         ItemComponent={(data, id) => <TeamCard team={data} key={id} />}

@@ -48,10 +48,14 @@ export default function Project({ project }: { project: ProjectInterface }) {
             </div>
           )}
         </div>
-        <div className="flex flex-col justify-center items-center space-y-5">
-          <div className="flex gap-2">{tags}</div>
+        <div className="flex flex-col justify-center items-center space-y-5 max-w-sm">
+          <div className="flex gap-2 flex-wrap">{tags}</div>
           {project.url && (
-            <Link href={urlParse(project.url as string)} className="mx-2">
+            <Link
+              href={urlParse(project.url as string)}
+              target="_blank"
+              className="mx-2"
+            >
               <TypographyH4 className="w-fit hover:scale-105">
                 Visit Site
               </TypographyH4>

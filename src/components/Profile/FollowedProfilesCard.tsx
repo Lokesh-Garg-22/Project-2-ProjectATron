@@ -1,17 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
-import { ProjectInterface } from "../../lib/interface/project/interface";
 import { ProfileInterface } from "@/lib/interface/profile/interface";
 import { useEffect, useState } from "react";
 import { windowUsername, windowUserPassword } from "@/lib/data";
 
 export default function FollowedProfilesCard() {
-  const [profiles, setProfiles] = useState<ProfileInterface[]>([
-    { name: "Project 1", username: "", about: "", projects: 0, id: "982hbkma" },
-    { name: "Project 1", username: "", about: "", projects: 0, id: "982hbkma" },
-    { name: "Project 1", username: "", about: "", projects: 0, id: "982hbkma" },
-    { name: "Project 1", username: "", about: "", projects: 0, id: "982hbkma" },
-  ]);
+  const [profiles, setProfiles] = useState<ProfileInterface[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -64,6 +58,8 @@ export default function FollowedProfilesCard() {
       <CardContent className="w-80 flex flex-col capitalize">
         {loading
           ? "Loading..."
+          : profiles.length == 0
+          ? "No one Followed yet!"
           : profiles.map((ele, id) => (
               <Link
                 key={id}

@@ -3,7 +3,7 @@ import { DataRequest } from "./interface";
 import User, { userSchema } from "./models/User";
 
 export default async function userAuthentication(req: DataRequest) {
-  const { username, password }: { username: string; password: string } =
+  const { username, password }: { username?: string; password?: string } =
     req.data;
   if (!username) throw new Error("Username not Provided");
   if (!password) throw new Error("Password not Provided");

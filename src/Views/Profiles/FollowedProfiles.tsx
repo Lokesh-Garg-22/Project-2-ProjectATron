@@ -55,7 +55,7 @@ export default function FollowedProfiles(
 
   return (
     <MainContainer className="items-center">
-      <SearchBar />
+      <SearchBar defaultValue={props.searchParams.search} />
       <ListRenderer
         list={profiles}
         ItemComponent={(data, id) => <ProfileCard key={id} profile={data} />}

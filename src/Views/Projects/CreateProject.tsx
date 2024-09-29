@@ -81,11 +81,14 @@ export default function CreateProject() {
         }),
       })
         .then((res) => res.json())
-        .then((res) =>
-          res.map((ele: HydratedDocument<teamSchema>) => {
-            return { ...ele, id: ele._id };
-          })
-        );
+        .then((res) => {
+          if (res?.teams) {
+            return res.teams.map((ele: HydratedDocument<teamSchema>) => {
+              return { ...ele, id: ele._id };
+            });
+          }
+          return [];
+        });
       setTeamsList(
         result.map((ele) => {
           return { label: ele.name, value: ele.id };

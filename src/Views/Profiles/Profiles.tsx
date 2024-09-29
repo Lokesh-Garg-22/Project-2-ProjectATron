@@ -6,15 +6,18 @@ import SearchBar from "@/components/search/SearchBar";
 
 export default function Profiles({
   profiles,
+  search,
 }: {
   profiles: ProfileInterface[];
+  search?: string;
 }) {
   return (
     <MainContainer className="items-center">
-      <SearchBar />
+      <SearchBar defaultValue={search} />
       <ListRenderer
         list={profiles}
         ItemComponent={(data, id) => <ProfileCard key={id} profile={data} />}
+        placeholder="No Profile Found!!"
       />
     </MainContainer>
   );

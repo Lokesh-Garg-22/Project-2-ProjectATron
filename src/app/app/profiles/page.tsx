@@ -3,6 +3,8 @@ import { ProfileInterface } from "@/lib/interface/profile/interface";
 import { urlParse } from "@/lib/utils";
 import Profiles from "@/Views/Profiles/Profiles";
 
+export const dynamic = "force-dynamic";
+
 export default async function Page(
   props: unknown & { searchParams: { search?: string } }
 ) {
@@ -12,7 +14,7 @@ export default async function Page(
     }`,
     {
       method: "GET",
-      next: { revalidate: 0 },
+      cache: "no-cache",
     }
   )
     .then((res) => res.json())
@@ -23,5 +25,5 @@ export default async function Page(
         });
     })) as ProfileInterface[];
 
-  return <Profiles profiles={profiles} />;
+  return <Profiles profiles={profiles} search={props.searchParams.search} />;
 }

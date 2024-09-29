@@ -28,16 +28,19 @@ export async function getProjects({
       .join("&")}`,
     {
       method: "GET",
+      cache: "no-cache",
       headers: {
         "Content-type": "application/json",
       },
     }
   )
     .then((res) => res.json())
-    .then((res) => res.projects)
-    .then((res: HydratedDocument<projectSchema>[]) =>
-      res.map((ele) => {
-        return { ...ele, id: ele._id };
-      })
-    )) as ProjectInterface[];
+    .then((res) => {
+      if (res.projects) {
+        return res.projects.map((ele: HydratedDocument<projectSchema>) => {
+          return { ...ele, id: ele._id };
+        });
+      }
+      return [];
+    })) as ProjectInterface[];
 }

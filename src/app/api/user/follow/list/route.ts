@@ -16,7 +16,7 @@ export const POST = TryCatch(
     await userAuthentication(req);
     const followedList: HydratedDocument<followedUserSchema>[] =
       await FollowedUser.find({ userId: req.data.userId });
-    if (followedList.length == 0) return NextResponse.json({ followed: [] });
+    if (followedList.length == 0) return NextResponse.json({});
     const regex = new RegExp(EscapeRegex(req.data.search || ""), "gi");
     const followed = followedList[0];
     followed.followedIDs = followed.followedIDs.filter(async (ele) =>

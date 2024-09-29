@@ -3,6 +3,6 @@ export type DataRequest = Request & {
     [index: string]: any;
     userId?: string;
     username?: string;
-    passwrod?: string;
+    password?: string;
   };
 };

@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ProfileInterface } from "../../lib/interface/profile/interface";
 import { useEffect, useState } from "react";
 import { windowUserid } from "@/lib/data";
+import { getProjects } from "../Project/utils";
 
 export default function PersonalProfileCard() {
   const [profile, setProfile] = useState<ProfileInterface>();
@@ -16,8 +17,17 @@ export default function PersonalProfileCard() {
             `/api/user?id=${window.localStorage.getItem(windowUserid)}`
           )
             .then((res) => res.json())
-            .then((res) => {
-              if (res?.user) return res.user;
+            .then(async (res) => {
+              if (res?.user) {
+                res.user.id = res.user._id;
+                res.user.projects = (
+                  await getProjects({
+                    link: "/api/user/projects",
+                    userId: res.user.id,
+                  })
+                ).length;
+                return res.user;
+              }
               return undefined;
             })
         );

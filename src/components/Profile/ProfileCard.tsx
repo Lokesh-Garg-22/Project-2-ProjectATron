@@ -17,7 +17,7 @@ export default function ProfileCard({
         </div>
         <div className="h-full border-2 rounded" />
         <div className="grow text-right">
-          <Link href={"/app/profile/" + profile.id}>
+          <Link href={"/app/profile/" + profile.id} className="hover:underline">
             <TypographyH3>{profile.name}</TypographyH3>
           </Link>
           <TypographyH4>{profile.about}</TypographyH4>

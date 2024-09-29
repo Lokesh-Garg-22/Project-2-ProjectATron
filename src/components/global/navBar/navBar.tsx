@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Logout, { logout } from "../user/logout";
+import EditProfileDialog from "../user/editProfileDialog";
 
 export default function NavBar() {
   const [login, setLogin] = useState(false);
@@ -54,8 +55,22 @@ export default function NavBar() {
                     </Avatar>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
-                    {/* TODO: Edit Profile */}
-                    <DropdownMenuItem>Edit Profile</DropdownMenuItem>
+                    <EditProfileDialog
+                      DialogTriggerButton={({
+                        children,
+                      }: {
+                        children: ReactNode;
+                      }) => (
+                        <DropdownMenuItem
+                          onClick={(event) => {
+                            event.preventDefault();
+                          }}
+                          className="text-sm font-semibold"
+                        >
+                          {children}
+                        </DropdownMenuItem>
+                      )}
+                    />
                     <DropdownMenuItem onClick={logout}>
                       <Logout />
                     </DropdownMenuItem>

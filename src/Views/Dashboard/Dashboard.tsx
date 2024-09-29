@@ -9,31 +9,14 @@ import { getProjects } from "@/components/Project/utils";
 import TeamsCard from "@/components/Team/TeamsCard";
 import ListRenderer from "@/components/Wrapper/ListRenderer";
 import { windowUsername, windowUserPassword } from "@/lib/data";
-import { projectSchema } from "@/lib/db/models/Project";
 import { ProjectInterface } from "@/lib/interface/project/interface";
-import { HydratedDocument } from "mongoose";
 import { useEffect, useState } from "react";
 
 export default function Dashboard() {
-  const [projects, setProjects] = useState<ProjectInterface[]>([
-    {
-      name: "Project 1",
-      id: "90uqb",
-      tags: ["Awd", "awd"],
-      url: "https://google.co.in",
-      userID: "",
-      pinned: true,
-    },
-    {
-      name: "Project 2",
-      id: "90uq",
-      tags: ["goood", ""],
-      userID: "",
-    },
-  ]);
+  const [projects, setProjects] = useState<ProjectInterface[]>([]);
 
   useEffect(() => {
-    if (window && false) {
+    if (window) {
       (async () => {
         const userId = await fetch("/api/user/id", {
           method: "POST",
@@ -67,7 +50,6 @@ export default function Dashboard() {
         <TeamsCard />
         <ProjectsCard />
       </div>
-      {/* [ ] check section */}
       <ListRenderer
         list={projects}
         ItemComponent={(data, id) => <ProjectCard key={id} project={data} />}

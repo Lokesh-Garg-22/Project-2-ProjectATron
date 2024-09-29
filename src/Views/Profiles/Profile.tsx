@@ -155,6 +155,7 @@ export default function Profile({
       <ListRenderer
         list={projects}
         ItemComponent={(data, id) => <ProjectCard key={id} project={data} />}
+        placeholder="No Project Found!!"
       />
     </MainContainer>
   );

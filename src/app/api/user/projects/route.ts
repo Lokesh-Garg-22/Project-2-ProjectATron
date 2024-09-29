@@ -11,7 +11,9 @@ export const GET = TryCatch(async (req: Request) => {
   const projects = await Project.find({
     userID: data.get("id"),
     name: regex,
-    pinned: (data.get("pinned") || "") == "true",
+    ...(data.get("pinned") != null
+      ? { pinned: data.get("pinned") == "true" }
+      : {}),
   });
   return NextResponse.json({ projects });
 });

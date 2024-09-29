@@ -2,44 +2,49 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { ProjectInterface } from "../../lib/interface/project/interface";
 import { useEffect, useState } from "react";
-import { windowUserid } from "@/lib/data";
+import { windowUsername, windowUserPassword } from "@/lib/data";
+import { getProjects } from "./utils";
 
 export default function ProjectsCard() {
   const [projects, setProjects] = useState<ProjectInterface[]>([]);
+  const [userId, setUserId] = useState<string>("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    (async () => {
-      if (window) {
+    if (window) {
+      (async () => {
         setLoading(true);
-        setProjects([
-          ...((await fetch(
-            `/api/user/projects?id=${window.localStorage.getItem(
-              windowUserid
-            )}`,
-            {
-              method: "GET",
-              headers: {
-                "Content-type": "application/json",
-              },
-            }
-          )
-            .then((res) => res.json())
-            .then(async (res) => {
-              if (res?.projects) return res.projects;
-              return [];
-            })) as ProjectInterface[]),
-        ]);
+        const userId = await fetch("/api/user/id", {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({
+            username: window.localStorage.getItem(windowUsername),
+            password: window.localStorage.getItem(windowUserPassword),
+          }),
+        })
+          .then((res) => res.json())
+          .then((res) => (res.userId ? res.userId : ""))
+          .catch((err) => console.log(err));
+        setUserId(userId);
+        setProjects(
+          await getProjects({
+            link: "/api/user/projects",
+            userId,
+          })
+        );
         setLoading(false);
-      }
-    })();
+      })();
+    }
   }, []);
 
   return (
     <Card className="my-auto">
       <CardHeader>
         <CardTitle>
-          <Link href="app/projects" className="hover:underline">
+          <Link
+            href={`app/profile/${userId}/projects`}
+            className="hover:underline"
+          >
             Recent Projects
           </Link>
         </CardTitle>

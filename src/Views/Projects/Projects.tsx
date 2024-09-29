@@ -15,7 +15,7 @@ export default async function Projects({
 
   return (
     <MainContainer className="my-4 items-center space-y-4">
-      <SearchBar />
+      <SearchBar defaultValue={search} />
       <ListRenderer
         list={projects}
         ItemComponent={(data, id) => <ProjectCard key={id} project={data} />}

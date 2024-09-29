@@ -3,6 +3,8 @@ import Link from "next/link";
 import { TeamInterface } from "../../lib/interface/team/interface";
 import { useEffect, useState } from "react";
 import { windowUsername, windowUserPassword } from "@/lib/data";
+import { HydratedDocument } from "mongoose";
+import { teamSchema } from "@/lib/db/models/Team";
 
 export default function TeamsCard() {
   const [teams, setTeams] = useState<TeamInterface[]>([]);
@@ -27,7 +29,13 @@ export default function TeamsCard() {
             .then(async (res) => {
               if (res?.teams) return res.teams;
               return [];
-            })) as TeamInterface[]),
+            })
+            .then((res) =>
+              res.map((ele: HydratedDocument<teamSchema>) => {
+                ele.id = ele._id;
+                return ele;
+              })
+            )) as TeamInterface[]),
         ]);
         setLoading(false);
       }
